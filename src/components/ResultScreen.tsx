@@ -191,9 +191,6 @@ export function ResultScreen({
           isWin={isWin}
           onClose={() => setShowShareCard(false)}
           onShowToast={onShowToast}
-          guessCount={gameState.guesses.length}
-          dayNumber={dayNumber}
-          mode={gameState.mode}
         />
       )}
     </div>
@@ -209,9 +206,6 @@ interface ShareCardOverlayProps {
   isWin: boolean;
   onClose: () => void;
   onShowToast: (message: string) => void;
-  guessCount: number;
-  dayNumber: number;
-  mode: "daily" | "practice";
 }
 
 function ShareCardOverlay({
@@ -223,9 +217,6 @@ function ShareCardOverlay({
   isWin,
   onClose,
   onShowToast,
-  guessCount,
-  dayNumber,
-  mode,
 }: ShareCardOverlayProps) {
   const cardRef = useRef<HTMLDivElement>(null);
 
