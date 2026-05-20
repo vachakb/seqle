@@ -111,6 +111,7 @@ clearStaleLocalData();
 
 function AppInner() {
   const { isAuthenticated, user, logout } = useAuth();
+  const [restoring, setRestoring] = useState(() => !!localStorage.getItem("seqle-active-session"));
   const [screen, setScreen] = useState<Screen>("landing");
   const [gameState, setGameState] = useState<ClientGameState | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<1 | 2 | 3 | null>(null);
@@ -147,8 +148,10 @@ function AppInner() {
         } else {
           localStorage.removeItem("seqle-active-session");
         }
+        setRestoring(false);
       }).catch(() => {
         localStorage.removeItem("seqle-active-session");
+        setRestoring(false);
       });
     }
   }, []);
@@ -317,6 +320,10 @@ function AppInner() {
   } : null;
 
   const resultSequence = gameState?.sequence ? gameState.sequence : null;
+
+  if (restoring) {
+    return <div className="min-h-screen bg-[#0D0B1A]" />;
+  }
 
   return (
     <div className="relative min-h-screen bg-[#0D0B1A] overflow-hidden">
