@@ -68,6 +68,7 @@ export function GameBoard({
 
   const handleSubmit = useCallback(() => {
     if (inputValue === "" || inputValue === "-") return;
+    if (gameState.status !== "playing" || gameState.guesses.length >= 6) return;
     const numValue = parseInt(inputValue, 10);
     if (isNaN(numValue)) return;
 
@@ -83,7 +84,7 @@ export function GameBoard({
 
     onGuess(numValue);
     setInputValue("");
-  }, [inputValue, onGuess, onShowToast, gameState.ghostNumber]);
+  }, [inputValue, onGuess, onShowToast, gameState.ghostNumber, gameState.status, gameState.guesses.length]);
 
   const modeLabel =
     gameState.mode === "daily"
@@ -147,7 +148,7 @@ export function GameBoard({
         value={inputValue}
         onChange={setInputValue}
         onSubmit={handleSubmit}
-        disabled={gameState.status !== "playing"}
+        disabled={gameState.status !== "playing" || gameState.guesses.length >= 6}
         ghostNumber={gameState.ghostNumber}
       />
     </div>
