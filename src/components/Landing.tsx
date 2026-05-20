@@ -194,7 +194,7 @@ export function Landing({ onStartDaily, onStartPractice, streak, streakLevel, is
         </p>
         <p className="text-[#A09BB5]/40 text-[11px] mt-1.5">
           You can find me on{" "}
-          <a href="https://www.linkedin.com/in/vacha-buch" target="_blank" rel="noopener noreferrer"
+          <a href="https://www.linkedin.com/in/vacha-buch-544568224" target="_blank" rel="noopener noreferrer"
             className="text-[#8B5CF6]/60 hover:text-[#8B5CF6] transition-colors underline underline-offset-2">
             LinkedIn - Vacha Buch
           </a>
