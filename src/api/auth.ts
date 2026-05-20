@@ -10,7 +10,7 @@ interface MeResponse {
 }
 
 export async function register(email: string, password: string, displayName?: string): Promise<AuthResponse> {
-  const guestToken = localStorage.getItem("seqle-guest-token");
+  const guestToken = localStorage.getItem("seqle-guest-token") || undefined;
   return request<AuthResponse>("/auth/register", {
     method: "POST",
     body: JSON.stringify({ email, password, displayName, guestToken }),
