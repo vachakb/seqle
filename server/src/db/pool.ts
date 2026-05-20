@@ -3,4 +3,5 @@ import { config } from "../config.js";
 
 export const pool = new pg.Pool({
   connectionString: config.databaseUrl,
+  ssl: config.nodeEnv === "production" ? { rejectUnauthorized: false } : undefined,
 });
