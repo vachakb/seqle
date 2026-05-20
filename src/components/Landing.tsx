@@ -38,7 +38,7 @@ export function Landing({ onStartDaily, onStartPractice, streak, streakLevel, is
   }, [showSparrow]);
 
   return (
-    <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-8">
+    <div className="relative z-10 flex flex-col items-center min-h-screen px-4 pt-20 pb-4">
       {/* Auth indicator */}
       <div className="absolute top-4 right-4">
         {isAuthenticated ? (
@@ -186,6 +186,25 @@ export function Landing({ onStartDaily, onStartPractice, streak, streakLevel, is
       <p className="mt-12 text-[#A09BB5]/60 text-xs sm:text-sm italic max-w-sm text-center leading-relaxed px-4">
         &ldquo;{quote}&rdquo;
       </p>
+
+      {/* Footer */}
+      <footer className="mt-auto pt-10 pb-6 text-center px-4">
+        <p className="text-[#A09BB5]/50 text-xs">
+          Created by a fellow math nerd ;)
+        </p>
+        <p className="text-[#A09BB5]/40 text-[11px] mt-1.5">
+          You can find me on{" "}
+          <a href="https://www.linkedin.com/in/vacha-buch" target="_blank" rel="noopener noreferrer"
+            className="text-[#8B5CF6]/60 hover:text-[#8B5CF6] transition-colors underline underline-offset-2">
+            LinkedIn - Vacha Buch
+          </a>
+          {" "}and{" "}
+          <a href="mailto:vachakb@gmail.com"
+            className="text-[#8B5CF6]/60 hover:text-[#8B5CF6] transition-colors underline underline-offset-2">
+            Email - vachakb@gmail.com
+          </a>
+        </p>
+      </footer>
     </div>
   );
 }
