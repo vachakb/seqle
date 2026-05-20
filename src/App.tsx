@@ -123,6 +123,37 @@ function AppInner() {
   const [gameLoading, setGameLoading] = useState(false);
 
   useEffect(() => {
+    const savedSessionId = localStorage.getItem("seqle-active-session");
+    if (savedSessionId) {
+      gamesApi.getGameState(savedSessionId).then(res => {
+        if (res.status === "playing") {
+          setGameState({
+            sessionId: savedSessionId,
+            mode: res.mode,
+            difficulty: res.difficulty,
+            dayNumber: res.dayNumber,
+            revealedTerms: res.initialTerms,
+            totalTermsToShow: res.totalTermsToShow,
+            guesses: res.guesses,
+            consecutiveCorrect: res.consecutiveCorrect,
+            status: "playing",
+            hintRevealed: !!res.hintFamily,
+            hintFamily: res.hintFamily,
+            ghostNumber: res.ghostNumber,
+          });
+          setSelectedDifficulty(res.difficulty);
+          setDayNumber(res.dayNumber);
+          setScreen("game");
+        } else {
+          localStorage.removeItem("seqle-active-session");
+        }
+      }).catch(() => {
+        localStorage.removeItem("seqle-active-session");
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     if (isAuthenticated) {
       fetchServerStats()
         .then(res => setStreak(res.stats.currentStreak))
@@ -157,6 +188,7 @@ function AppInner() {
       const res = await gamesApi.startGame("daily");
       setDayNumber(res.dayNumber);
       setSelectedDifficulty(res.difficulty);
+      localStorage.setItem("seqle-active-session", res.sessionId);
       setGameState({
         sessionId: res.sessionId,
         mode: "daily",
@@ -186,6 +218,7 @@ function AppInner() {
     setGameLoading(true);
     try {
       const res = await gamesApi.startGame("practice", difficulty);
+      localStorage.setItem("seqle-active-session", res.sessionId);
       setSelectedDifficulty(difficulty);
       setGameState({
         sessionId: res.sessionId,
@@ -229,6 +262,7 @@ function AppInner() {
       });
 
       if (res.gameStatus === "won" || res.gameStatus === "lost") {
+        localStorage.removeItem("seqle-active-session");
         const totalGuesses = gameState.guesses.length + 1;
         updateLocalStats(res.gameStatus === "won", totalGuesses, gameState.mode);
 
@@ -248,6 +282,7 @@ function AppInner() {
   }, [gameState, showToast, isAuthenticated, refreshStreak]);
 
   const handleBack = useCallback(() => {
+    localStorage.removeItem("seqle-active-session");
     setScreen("landing");
     setGameState(null);
   }, []);
